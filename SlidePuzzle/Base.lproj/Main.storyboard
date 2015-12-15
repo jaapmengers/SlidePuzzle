@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SlidePuzzle" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +18,71 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b6S-H4-7aZ">
+                                <rect key="frame" x="60" y="60" width="480" height="480"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Image-13" translatesAutoresizingMaskIntoConstraints="NO" id="rbM-Us-FcU">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Image-3" translatesAutoresizingMaskIntoConstraints="NO" id="6SE-7X-LdF">
+                                        <rect key="frame" x="100" y="0.0" width="100" height="100"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Image-8" translatesAutoresizingMaskIntoConstraints="NO" id="Jtx-fp-MFD">
+                                        <rect key="frame" x="200" y="0.0" width="100" height="100"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Image-15" translatesAutoresizingMaskIntoConstraints="NO" id="wsZ-vE-uWX">
+                                        <rect key="frame" x="300" y="0.0" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="WVI-i8-DFK"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="rbM-Us-FcU" firstAttribute="top" secondItem="b6S-H4-7aZ" secondAttribute="top" id="1gA-zv-q6l"/>
+                                    <constraint firstItem="wsZ-vE-uWX" firstAttribute="bottom" secondItem="rbM-Us-FcU" secondAttribute="bottom" id="BrY-my-Ipi"/>
+                                    <constraint firstItem="wsZ-vE-uWX" firstAttribute="width" secondItem="b6S-H4-7aZ" secondAttribute="width" multiplier="0.25" id="CGt-Dj-bLo"/>
+                                    <constraint firstItem="wsZ-vE-uWX" firstAttribute="top" secondItem="rbM-Us-FcU" secondAttribute="top" id="EWO-oP-lpJ"/>
+                                    <constraint firstItem="wsZ-vE-uWX" firstAttribute="bottom" secondItem="6SE-7X-LdF" secondAttribute="bottom" id="Frz-Lb-Vnw"/>
+                                    <constraint firstAttribute="width" secondItem="b6S-H4-7aZ" secondAttribute="height" multiplier="1:1" id="JRM-iq-JqJ"/>
+                                    <constraint firstItem="Jtx-fp-MFD" firstAttribute="width" secondItem="b6S-H4-7aZ" secondAttribute="width" multiplier="0.25" id="Jfc-cX-IYk"/>
+                                    <constraint firstItem="rbM-Us-FcU" firstAttribute="leading" secondItem="b6S-H4-7aZ" secondAttribute="leading" id="Kky-M8-lGF"/>
+                                    <constraint firstItem="6SE-7X-LdF" firstAttribute="leading" secondItem="rbM-Us-FcU" secondAttribute="trailing" multiplier="0.25" id="OoF-CO-PMz"/>
+                                    <constraint firstItem="wsZ-vE-uWX" firstAttribute="leading" secondItem="Jtx-fp-MFD" secondAttribute="trailing" multiplier="0.25" id="fOQ-WZ-ixd"/>
+                                    <constraint firstItem="6SE-7X-LdF" firstAttribute="width" secondItem="b6S-H4-7aZ" secondAttribute="width" multiplier="0.25" id="jb1-gT-XJE"/>
+                                    <constraint firstItem="wsZ-vE-uWX" firstAttribute="top" secondItem="Jtx-fp-MFD" secondAttribute="top" id="jjp-gM-dRC"/>
+                                    <constraint firstItem="wsZ-vE-uWX" firstAttribute="bottom" secondItem="Jtx-fp-MFD" secondAttribute="bottom" id="lUh-nN-KRf"/>
+                                    <constraint firstItem="rbM-Us-FcU" firstAttribute="width" secondItem="b6S-H4-7aZ" secondAttribute="width" multiplier="0.25" id="ncC-WG-IbS"/>
+                                    <constraint firstItem="wsZ-vE-uWX" firstAttribute="top" secondItem="b6S-H4-7aZ" secondAttribute="top" id="ndk-dj-F9j"/>
+                                    <constraint firstItem="rbM-Us-FcU" firstAttribute="top" secondItem="b6S-H4-7aZ" secondAttribute="top" id="ngx-9K-nsK"/>
+                                    <constraint firstItem="wsZ-vE-uWX" firstAttribute="top" secondItem="6SE-7X-LdF" secondAttribute="top" id="qpj-6w-M5c"/>
+                                    <constraint firstAttribute="trailing" secondItem="wsZ-vE-uWX" secondAttribute="trailing" constant="80" id="tIK-vH-zwQ"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="1gA-zv-q6l"/>
+                                        <exclude reference="ngx-9K-nsK"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="b6S-H4-7aZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7RL-fu-ZPa"/>
+                            <constraint firstItem="b6S-H4-7aZ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="x4L-ad-WII"/>
+                            <constraint firstItem="b6S-H4-7aZ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="xYk-fr-SB0"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="Image-13" width="256" height="256"/>
+        <image name="Image-15" width="256" height="256"/>
+        <image name="Image-3" width="256" height="256"/>
+        <image name="Image-8" width="256" height="256"/>
+    </resources>
 </document>
