@@ -22,12 +22,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b6S-H4-7aZ">
                                 <rect key="frame" x="60" y="60" width="480" height="480"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image-15" translatesAutoresizingMaskIntoConstraints="NO" id="wsZ-vE-uWX">
-                                        <rect key="frame" x="360" y="0.0" width="120" height="120"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="wsZ-vE-uWX" secondAttribute="height" multiplier="1:1" id="y9X-UI-1sr"/>
-                                        </constraints>
-                                    </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image-3" translatesAutoresizingMaskIntoConstraints="NO" id="6SE-7X-LdF">
                                         <rect key="frame" x="120" y="0.0" width="120" height="120"/>
                                         <constraints>
@@ -46,8 +40,16 @@
                                             <constraint firstAttribute="width" secondItem="rbM-Us-FcU" secondAttribute="height" multiplier="1:1" id="FfW-ln-Ndm"/>
                                         </constraints>
                                     </imageView>
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image-15" translatesAutoresizingMaskIntoConstraints="NO" id="wsZ-vE-uWX">
+                                        <rect key="frame" x="360" y="0.0" width="120" height="120"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="wsZ-vE-uWX" secondAttribute="height" multiplier="1:1" id="y9X-UI-1sr"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.11242632745804704" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="wsZ-vE-uWX" firstAttribute="top" secondItem="b6S-H4-7aZ" secondAttribute="top" id="815-eK-rid"/>
                                     <constraint firstItem="Jtx-fp-MFD" firstAttribute="top" secondItem="b6S-H4-7aZ" secondAttribute="top" id="CCG-80-acR"/>
@@ -73,6 +75,12 @@
                             <constraint firstItem="b6S-H4-7aZ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="xYk-fr-SB0"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="image1" destination="rbM-Us-FcU" id="B9B-sb-he9"/>
+                        <outlet property="image2" destination="6SE-7X-LdF" id="rIM-sx-pwD"/>
+                        <outlet property="image3" destination="Jtx-fp-MFD" id="O2c-MO-iTW"/>
+                        <outlet property="image4" destination="wsZ-vE-uWX" id="piK-lT-cQq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
