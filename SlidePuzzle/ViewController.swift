@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct Position {
+    let x: Int
+    let y: Int
+}
+
 class ViewController: UIViewController {
     
     @IBOutlet weak var image1: UIImageView!
@@ -18,8 +23,10 @@ class ViewController: UIViewController {
     var images = [UIImageView]()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
+        let positions = Array(0..<16).map { Position(x: $0 % 4, y: Int(floor(Double($0) / 4.0)) ) }
         
         images = [image1, image2, image3, image4]
         
@@ -38,8 +45,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func handlePan(recognizer: UIPanGestureRecognizer) {
-        
-        print("Handle pan")
         
         let translation = recognizer.translationInView(self.view)
         if let view = recognizer.view{
