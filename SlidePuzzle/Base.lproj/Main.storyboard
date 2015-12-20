@@ -165,19 +165,6 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="YAZ-b1-vKx">
-                                        <rect key="frame" x="0.0" y="450" width="150" height="150"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="240" id="7uz-m9-cP2"/>
-                                            <constraint firstAttribute="width" secondItem="YAZ-b1-vKx" secondAttribute="height" multiplier="1:1" id="l95-Yg-MeB"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="7uz-m9-cP2"/>
-                                            </mask>
-                                        </variation>
-                                    </view>
                                     <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="zfU-i8-Hwk">
                                         <rect key="frame" x="300" y="450" width="150" height="150"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -227,6 +214,19 @@
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="5Bc-rr-hD8"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
+                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="YAZ-b1-vKx">
+                                        <rect key="frame" x="0.0" y="450" width="150" height="150"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="240" id="7uz-m9-cP2"/>
+                                            <constraint firstAttribute="width" secondItem="YAZ-b1-vKx" secondAttribute="height" multiplier="1:1" id="l95-Yg-MeB"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="7uz-m9-cP2"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -350,7 +350,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="view1" destination="T4i-nx-uwM" id="Jcb-u1-cvK"/>
                         <outlet property="view_1" destination="ATM-zF-Mgo" id="K3B-PQ-wwx"/>
                         <outlet property="view_10" destination="kEf-eN-om8" id="9hV-OJ-6Oc"/>
                         <outlet property="view_11" destination="XxL-1c-fo8" id="iC6-dN-LGd"/>

@@ -38,6 +38,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         let positions = Array(0..<16).map { Position(x: $0 % 4, y: Int(floor(Double($0) / 4.0)) ) }
+        
+        let image1 = UIImage(named: "0_0")
+        let imageview1 = UIImageView(image: image1)
+        view_1.addSubview(imageview1)
+        
 
     }
 
