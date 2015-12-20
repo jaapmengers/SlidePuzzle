@@ -146,6 +146,7 @@
 				TargetAttributes = {
 					5BBBD7C31C1F551E0014CCEE = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 4U9L253R5Z;
 					};
 					5BBBD7D71C1F551E0014CCEE = {
 						CreatedOnToolsVersion = 7.2;
@@ -327,10 +328,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SlidePuzzle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jaapmengers.SlidePuzzle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -338,10 +342,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SlidePuzzle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jaapmengers.SlidePuzzle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -388,6 +395,7 @@
 				5BBBD7E31C1F551E0014CCEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5BBBD7E41C1F551E0014CCEE /* Build configuration list for PBXNativeTarget "SlidePuzzleTests" */ = {
 			isa = XCConfigurationList;
@@ -396,6 +404,7 @@
 				5BBBD7E61C1F551E0014CCEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
