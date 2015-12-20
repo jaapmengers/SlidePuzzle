@@ -15,27 +15,29 @@ struct Position {
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var image1: UIImageView!
-    @IBOutlet weak var image2: UIImageView!
-    @IBOutlet weak var image3: UIImageView!
-    @IBOutlet weak var image4: UIImageView!
+    @IBOutlet weak var view_1: UIView!
+    @IBOutlet weak var view_2: UIView!
+    @IBOutlet weak var view_3: UIView!
+    @IBOutlet weak var view_4: UIView!
+    @IBOutlet weak var view_5: UIView!
+    @IBOutlet weak var view_6: UIView!
+    @IBOutlet weak var view_7: UIView!
+    @IBOutlet weak var view_8: UIView!
+    @IBOutlet weak var view_9: UIView!
+    @IBOutlet weak var view_10: UIView!
+    @IBOutlet weak var view_11: UIView!
+    @IBOutlet weak var view_12: UIView!
+    @IBOutlet weak var view_13: UIView!
+    @IBOutlet weak var view_14: UIView!
+    @IBOutlet weak var view_15: UIView!
+    @IBOutlet weak var view_16: UIView!
     
-    var images = [UIImageView]()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         let positions = Array(0..<16).map { Position(x: $0 % 4, y: Int(floor(Double($0) / 4.0)) ) }
-        
-        images = [image1, image2, image3, image4]
-        
-        for image in images {
-            image.userInteractionEnabled = true
-            
-            let recognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
-            image.addGestureRecognizer(recognizer)
-        }
 
     }
 
