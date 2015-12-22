@@ -50,6 +50,18 @@ struct Tile {
     let view: UIView
 }
 
+struct State {
+    var moveableTiles = [(Tile, Position, Direction)]()
+    var board = Board()
+}
+
+enum Direction {
+    case Up
+    case Down
+    case Left
+    case Right
+}
+
 typealias Board = [(position: Position, tile: Tile?)]
 
 class ViewController: UIViewController {
@@ -72,12 +84,33 @@ class ViewController: UIViewController {
     @IBOutlet weak var view_16: UIView!
     @IBOutlet weak var container: UIView!
     
+    let neighbours = [
+        [4, 1],
+        [5, 0, 2],
+        [6, 1, 3],
+        [7, 2],
+        [0, 8, 5],
+        [1, 9, 4, 6],
+        [2, 10, 5, 7],
+        [3, 11, 6],
+        [4, 12, 9],
+        [5, 13, 8, 10],
+        [6, 14, 9, 11],
+        [7, 15, 10],
+        [8, 13],
+        [9, 12, 14],
+        [10, 13, 15],
+        [11, 14]
+    ]
+    
     
     func getPositionFunc(positions: [UIView]) -> Int -> Position {
         return { (nr: Int) in
             return Position(x: nr % 4, y: Int(floor(Double(nr) / 4.0)), view: positions[nr] )
         }
     }
+    
+    var state = State()
     
     override func viewDidLoad() {
         
@@ -105,12 +138,12 @@ class ViewController: UIViewController {
         
         let f = getPositionFunc(positions)
         
-        let board: Board = Array(0..<15).map { (f($0), Tile(number: $0, view: tiles[$0])) }
         let emptyTile: [(Position, Tile?)] = [(f(15), nil)]
+        let board: Board = Array(0..<15).map { (f($0), Tile(number: $0, view: tiles[$0])) } + emptyTile
         
-        let shuffled = shuffleBoard(board + emptyTile)
+        state.board = shuffleBoard(board)
             
-        for (_, pos) in shuffled.enumerate() {
+        for (_, pos) in state.board.enumerate() {
             
             if let t = pos.tile {
                 
@@ -126,50 +159,56 @@ class ViewController: UIViewController {
                 NSLayoutConstraint.activateConstraints([widthConstraint, heightConstraint, topConstraint, leadingConstraint])
             }
         }
+        
+        gameLoop()
+    }
+    
+    func gameLoop() {
+        let emptyTileIndex = state.board.indexOf { $0.tile == nil }!
+        let neighbouringTiles = neighbours[emptyTileIndex]
+        
+        state.moveableTiles = neighbouringTiles.map { (i) in
+            let tileAndPosition = state.board[i]
+            var direction: Direction? = nil
+            switch (i - emptyTileIndex) {
+            case -1:
+                direction = .Right
+            case 1 :
+                direction = .Left
+            case -4:
+                direction = .Down
+            case 4:
+                direction = .Up
+            default:
+                print("This should throw an error or something")
+            }
+            
+            return (tileAndPosition.tile!, tileAndPosition.position, direction!)
+        }
+        
     }
     
     
     func shuffleBoard(board: Board) -> Board {
-        
-        let neighbours = [
-            [4, 1],
-            [5, 0, 2],
-            [6, 1, 3],
-            [7, 2],
-            [0, 8, 5],
-            [1, 9, 4, 6],
-            [2, 10, 5, 7],
-            [3, 11, 6],
-            [4, 12, 9],
-            [5, 13, 8, 10],
-            [6, 14, 9, 11],
-            [7, 15, 10],
-            [8, 13],
-            [9, 12, 14],
-            [10, 13, 15],
-            [11, 14]
-        ]
         
         func shuffle(var board: Board, times: Int) -> Board {
             if times == 0 {
                 return board
             }
             
-            let emptyTileIndex = board.indexOf { (position, tile) in
-                return tile == nil
-            }
+            let emptyTileIndex = board.indexOf { $0.tile == nil }!
             
             print("EmptyTileIndex \(emptyTileIndex)")
             
-            let tileNeighbours = neighbours[emptyTileIndex!]
+            let tileNeighbours = neighbours[emptyTileIndex]
             let randomNeighbourIndex = tileNeighbours[Int(arc4random_uniform(UInt32(tileNeighbours.count)))]
             
             print("Swapping with \(randomNeighbourIndex)")
             
-            let emptyTile = board[emptyTileIndex!]
+            let emptyTile = board[emptyTileIndex]
             let tile = board[randomNeighbourIndex]
             
-            board[emptyTileIndex!] = (emptyTile.position, tile.tile)
+            board[emptyTileIndex] = (emptyTile.position, tile.tile)
             board[randomNeighbourIndex] = (tile.position, emptyTile.tile)
             
             return shuffle(board, times: times - 1)
@@ -186,21 +225,78 @@ class ViewController: UIViewController {
     
     @IBAction func handlePan(recognizer: UIPanGestureRecognizer)
     {
-        if recognizer.state == .Ended{
-            if let view = recognizer.view {
-                UIView.animateWithDuration(0.7, animations: {
-                    view.center.y -= 300
-                })
+        if let movingView = recognizer.view, foundView = state.moveableTiles.filter({ $0.0.view == movingView }).first {
+            print("Direction for moving is \(foundView.2)")
+            
+            let direction = foundView.2
+            var bounds: (CGPoint, CGPoint)? = nil
+            
+            print("Position \(foundView.0.view.bounds.width)")
+            let v = foundView.1.view
+            
+            switch direction{
+            case .Up:
+                bounds =  (v.center, CGPoint(x: v.center.x, y: v.center.y - v.bounds.height))
+            case .Down:
+                bounds =  (v.center, CGPoint(x: v.center.x, y: v.center.y + v.bounds.height))
+            case .Left:
+                bounds =  (v.center, CGPoint(x: v.center.x - v.bounds.width, y: v.center.y))
+            case .Right:
+                bounds =  (v.center, CGPoint(x: v.center.x + v.bounds.width, y: v.center.y))
             }
+            
+            let translation = recognizer.translationInView(self.view)
+            let tileView = foundView.0.view
+            
+            print(tileView.center)
+            let a = container.convertPoint(tileView.center, toView: tileView)
+            print(a)
+            
+            let b = tileView.convertPoint(tileView.center, toView: container)
+            print(b)
+            
+            let intentedPosition = CGPoint(x: tileView.center.x + translation.x, y: tileView.center.y + translation.y)
+            
+            var newPosition = tileView.center
+            
+//            print("intendedPosition \(intentedPosition)")
+//            print("bounds \(bounds)")
+            
+            if intentedPosition.x >= bounds!.0.x && intentedPosition.x <= bounds!.1.x {
+                newPosition.x = intentedPosition.x
+            }
+            
+            if(intentedPosition.y >= bounds!.0.y && intentedPosition.y <= bounds!.1.y){
+                newPosition.y = intentedPosition.y
+            }
+            
+//            print("newPosition \(newPosition)")
+            
+            
+            tileView.center = newPosition
+            recognizer.setTranslation(CGPointZero, inView: self.view)
+            
+            
+        } else {
+            print("This tile shouldn't move")
+        }
+        
+        if recognizer.state == .Ended{
+            gameLoop()
+            //                    if let view = recognizer.view {
+            //                        UIView.animateWithDuration(0.7, animations: {
+            //                            view.center.y -= 300
+            //                        })
+            //                    }
         }
         
         
-        let translation = recognizer.translationInView(self.view)
-        
-        if let view = recognizer.view{
-            view.center = CGPoint(x: view.center.x, y: view.center.y + translation.y)
-        }
-        recognizer.setTranslation(CGPointZero, inView: self.view)
+
+//        
+//        if let view = recognizer.view{
+//            view.center = CGPoint(x: view.center.x, y: view.center.y + translation.y)
+//        }
+//        recognizer.setTranslation(CGPointZero, inView: self.view)
     }
     
 }
