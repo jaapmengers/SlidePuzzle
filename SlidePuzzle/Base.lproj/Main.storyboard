@@ -333,6 +333,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="container" destination="b6S-H4-7aZ" id="vY3-oH-Pj4"/>
                         <outlet property="view_1" destination="ATM-zF-Mgo" id="K3B-PQ-wwx"/>
                         <outlet property="view_10" destination="kEf-eN-om8" id="9hV-OJ-6Oc"/>
                         <outlet property="view_11" destination="XxL-1c-fo8" id="iC6-dN-LGd"/>
