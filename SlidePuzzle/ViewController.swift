@@ -226,77 +226,69 @@ class ViewController: UIViewController {
     @IBAction func handlePan(recognizer: UIPanGestureRecognizer)
     {
         if let movingView = recognizer.view, foundView = state.moveableTiles.filter({ $0.0.view == movingView }).first {
-            print("Direction for moving is \(foundView.2)")
-            
             let direction = foundView.2
-            var bounds: (CGPoint, CGPoint)? = nil
-            
-            print("Position \(foundView.0.view.bounds.width)")
-            let v = foundView.1.view
-            
-            switch direction{
-            case .Up:
-                bounds =  (v.center, CGPoint(x: v.center.x, y: v.center.y - v.bounds.height))
-            case .Down:
-                bounds =  (v.center, CGPoint(x: v.center.x, y: v.center.y + v.bounds.height))
-            case .Left:
-                bounds =  (v.center, CGPoint(x: v.center.x - v.bounds.width, y: v.center.y))
-            case .Right:
-                bounds =  (v.center, CGPoint(x: v.center.x + v.bounds.width, y: v.center.y))
-            }
-            
+            let width = movingView.bounds.width
+            let height = movingView.bounds.height
             let translation = recognizer.translationInView(self.view)
-            let tileView = foundView.0.view
             
-            print(tileView.center)
-            let a = container.convertPoint(tileView.center, toView: tileView)
-            print(a)
-            
-            let b = tileView.convertPoint(tileView.center, toView: container)
-            print(b)
-            
-            let intentedPosition = CGPoint(x: tileView.center.x + translation.x, y: tileView.center.y + translation.y)
-            
-            var newPosition = tileView.center
-            
-//            print("intendedPosition \(intentedPosition)")
-//            print("bounds \(bounds)")
-            
-            if intentedPosition.x >= bounds!.0.x && intentedPosition.x <= bounds!.1.x {
-                newPosition.x = intentedPosition.x
+            if(recognizer.state == .Ended) {
+
+                let percentageX = (abs(movingView.transform.tx) / width) * 100
+                let percentageY = (abs(movingView.transform.ty) / height) * 100
+                
+                print(width, height)
+                print(movingView.transform)
+                print(percentageX, percentageY)
+                
+                if(percentageX + percentageY < 50){
+                    UIView.animateWithDuration(0.2, animations: {
+                        movingView.transform = CGAffineTransformMakeTranslation(0, 0)
+                    })
+                    
+                    gameLoop()
+                    return
+                }
+                
+                var animation: (x: CGFloat, y: CGFloat) = (0,0)
+                
+                switch direction {
+                case .Up:
+                    animation = (0, -height)
+                case .Down:
+                    animation = (0, height)
+                case .Left:
+                    animation = (-width, 0)
+                case .Right:
+                    animation = (width, 0)
+                }
+                
+                UIView.animateWithDuration(0.1, animations: {
+                    movingView.transform = CGAffineTransformMakeTranslation(animation.x, animation.y)
+                })
+                
+                gameLoop()
+                return
             }
             
-            if(intentedPosition.y >= bounds!.0.y && intentedPosition.y <= bounds!.1.y){
-                newPosition.y = intentedPosition.y
+            var movement: (allowed: Bool, transformation:(x: CGFloat, y: CGFloat))? = nil
+            
+            switch direction {
+            case .Up:
+                movement = (translation.y >= -height && translation.y <= 0, (0, translation.y))
+            case .Down:
+                movement = (translation.y <= height && translation.y >= 0, (0, translation.y))
+            case .Left:
+                movement = (translation.x >= -width && translation.x <= 0, (translation.x, 0))
+            case .Right:
+                movement = (translation.x <= width && translation.x >= 0, (translation.x, 0))
             }
             
-//            print("newPosition \(newPosition)")
-            
-            
-            tileView.center = newPosition
-            recognizer.setTranslation(CGPointZero, inView: self.view)
-            
-            
+            if movement!.allowed {
+                movingView.transform = CGAffineTransformMakeTranslation(movement!.transformation.x, movement!.transformation.y)
+            }
         } else {
             print("This tile shouldn't move")
         }
-        
-        if recognizer.state == .Ended{
-            gameLoop()
-            //                    if let view = recognizer.view {
-            //                        UIView.animateWithDuration(0.7, animations: {
-            //                            view.center.y -= 300
-            //                        })
-            //                    }
-        }
-        
-        
-
-//        
-//        if let view = recognizer.view{
-//            view.center = CGPoint(x: view.center.x, y: view.center.y + translation.y)
-//        }
-//        recognizer.setTranslation(CGPointZero, inView: self.view)
     }
     
 }
