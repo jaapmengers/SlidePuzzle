@@ -48,6 +48,14 @@ func ==(lhs: Position, rhs: Position) -> Bool {
 struct Tile {
     let number: Int
     let view: UIView
+    
+    var hashValue: Int {
+        return number
+    }
+}
+
+func ==(lhs: Tile, rhs: Tile) -> Bool {
+    return lhs.hashValue == rhs.hashValue
 }
 
 struct State {
@@ -198,12 +206,8 @@ class ViewController: UIViewController {
             
             let emptyTileIndex = board.indexOf { $0.tile == nil }!
             
-            print("EmptyTileIndex \(emptyTileIndex)")
-            
             let tileNeighbours = neighbours[emptyTileIndex]
             let randomNeighbourIndex = tileNeighbours[Int(arc4random_uniform(UInt32(tileNeighbours.count)))]
-            
-            print("Swapping with \(randomNeighbourIndex)")
             
             let emptyTile = board[emptyTileIndex]
             let tile = board[randomNeighbourIndex]
@@ -215,7 +219,47 @@ class ViewController: UIViewController {
         }
         
         
-        return shuffle(board, times: 100)
+        return shuffle(board, times: 200)
+    }
+    
+    func switchTiles(tile: Tile) {
+        
+        let emptyTileIndex = state.board.indexOf { $0.tile == nil }!
+        let emptyTile = state.board[emptyTileIndex]
+
+        let tileIndex = state.board.indexOf {$0.tile != nil && $0.tile! == tile}!
+        let tilePos = state.board[tileIndex].position
+        
+        state.board[emptyTileIndex] = (emptyTile.position, tile)
+        state.board[tileIndex] = (tilePos, nil)
+        
+        let destView = emptyTile.position.view
+        let imageview = tile.view
+        
+        tile.view.removeFromSuperview()
+        
+        imageview.transform = CGAffineTransformIdentity
+        
+        destView.addSubview(imageview)
+        
+        let widthConstraint = NSLayoutConstraint(item: imageview, attribute: .Width, relatedBy: .Equal, toItem: destView, attribute: .Width, multiplier: 1, constant: 0)
+        let heightConstraint = NSLayoutConstraint(item: imageview, attribute: .Height, relatedBy: .Equal, toItem: destView, attribute: .Height, multiplier: 1, constant: 0)
+        let topConstraint = NSLayoutConstraint(item: imageview, attribute: .Top, relatedBy: .Equal, toItem: destView, attribute: .Top , multiplier: 1, constant: 0)
+        let leadingConstraint = NSLayoutConstraint(item: imageview, attribute: .Leading, relatedBy: .Equal, toItem: destView, attribute: .Leading, multiplier: 1, constant: 0)
+        
+        
+        NSLayoutConstraint.activateConstraints([widthConstraint, heightConstraint, topConstraint, leadingConstraint])
+        
+        let nrs = state.board.flatMap { t in t.tile?.number }
+        if nrs.sort() == nrs {
+            let alert = UIAlertController(title: "w00t!", message: "You done knocked that shit outta the park, son!", preferredStyle: UIAlertControllerStyle.Alert)
+            let alertAction = UIAlertAction(title: "OK!", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
+            alert.addAction(alertAction)
+            presentViewController(alert, animated: true) { () -> Void in }
+        } else {
+            gameLoop()
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -235,10 +279,6 @@ class ViewController: UIViewController {
 
                 let percentageX = (abs(movingView.transform.tx) / width) * 100
                 let percentageY = (abs(movingView.transform.ty) / height) * 100
-                
-                print(width, height)
-                print(movingView.transform)
-                print(percentageX, percentageY)
                 
                 if(percentageX + percentageY < 50){
                     UIView.animateWithDuration(0.2, animations: {
@@ -264,9 +304,9 @@ class ViewController: UIViewController {
                 
                 UIView.animateWithDuration(0.1, animations: {
                     movingView.transform = CGAffineTransformMakeTranslation(animation.x, animation.y)
+                    }, completion: { _ in
+                        self.switchTiles(foundView.0)
                 })
-                
-                gameLoop()
                 return
             }
             
